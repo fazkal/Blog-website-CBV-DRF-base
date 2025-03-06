@@ -75,3 +75,9 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.email
+
+# Define a signal for create user profile after create that user
+@receiver(post_save, sender=User)
+def save_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
