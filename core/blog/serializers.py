@@ -13,6 +13,9 @@ class CategorySerializer(serializers.ModelSerializer):
 
 # Serializer for Post
 class PostSerializer(serializers.ModelSerializer):
+    snippet = serializers.ReadOnlyField(source="get_snippet")
+    absolute_url = serializers.HyperlinkedIdentityField(
+        view_name='blog:post',lookup_field='pk')
 
     class Meta:
         model = Post
@@ -21,8 +24,10 @@ class PostSerializer(serializers.ModelSerializer):
             "author",
             "title",
             "content",
+            "snippet",
             "category",
             "status",
+            "absolute_url",
             "created_date",
             "published_date"
         ]
@@ -35,3 +40,15 @@ class PostSerializer(serializers.ModelSerializer):
             user__id=self.context.get("request").user.id
         )
         return super().create(validated_data)
+    
+    # Change the display mode of post info based on the list or detail 
+    def to_representation(self, instance):
+        request = self.context.get("request")
+        rep = super().to_representation(instance)
+        if request.parser_context.get("kwargs").get("pk"):
+            rep.pop("snippet", None)
+            rep.pop("absolute_url", None)
+        else:
+            rep.pop("content", None)
+        rep["category"] = CategorySerializer(instance.category).data
+        return rep
