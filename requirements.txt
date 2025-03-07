@@ -1,3 +1,9 @@
+# General modules
 Django==4.2.14
 python-decouple
 pillow
+djangorestframework
+
+#Third party modules
+markdown
+django-filter
