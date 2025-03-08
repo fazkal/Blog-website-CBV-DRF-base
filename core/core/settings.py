@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "accounts",
     "website",
     "rest_framework",
+    "drf-yasg"
 ]
 
 MIDDLEWARE = [

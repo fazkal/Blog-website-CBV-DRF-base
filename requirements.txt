@@ -7,3 +7,4 @@ djangorestframework
 #Third party modules
 markdown
 django-filter
+drf-yasg[validation]
