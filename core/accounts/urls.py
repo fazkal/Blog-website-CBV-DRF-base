@@ -10,7 +10,20 @@ app_name = "accounts"
 
 urlpatterns = [
    
-    
+    # Registration (create) user:
+    path(
+        "registration/",
+        views.RegistrationApiView.as_view(),
+        name="registration",
+    ),
+
+    # Activation and verification user
+    path(
+        "activation/confirm/<str:token>",
+        views.ActivationApiView.as_view(),
+        name="activation",
+    ),
+
     # login jwt, get username and password give access and refresh token:
     path("jwt/create/", TokenObtainPairView.as_view(), name="jwt-create"),
 
