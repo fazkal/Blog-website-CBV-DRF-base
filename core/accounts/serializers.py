@@ -27,3 +27,21 @@ class RegistrationSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data.pop("password1", None)
         return User.objects.create_user(**validated_data)
+    
+
+# Define Serializer for resend activation token
+class ActivationResendSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+
+    def validate(self, attrs):
+        email = attrs.get("email")
+        try:
+            user_obj = User.objects.get(email=email)
+        except User.DoesNotExist:
+            raise serializers.ValidationError({"Details": "User does not exist"})
+        if user_obj.is_verified:
+            raise serializers.ValidationError(
+                {"Detail": "User is already activated and verified"}
+            )
+        attrs["user"] = user_obj
+        return super().validate(attrs)
