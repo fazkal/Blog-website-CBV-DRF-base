@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     "website",
     "rest_framework",
     "drf_yasg",
-    "rest_framework_simplejwt"
+    "rest_framework_simplejwt",
+    "mail_templated"
 ]
 
 MIDDLEWARE = [
@@ -187,3 +188,12 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=60),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
+
+# Email configuration for send email via gmail
+EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS =True
+EMAIL_HOST ='smtp.gmail.com'
+EMAIL_HOST_USER ='test4mydev@gmail.com'
+# This is App password, no account's password:
+EMAIL_HOST_PASSWORD ='Jvgzltrhmmrvtpae'
+EMAIL_PORT =587
