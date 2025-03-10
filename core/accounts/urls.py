@@ -24,6 +24,13 @@ urlpatterns = [
         name="activation",
     ),
 
+    # Resend Activation token
+    path(
+        "activation/resend/",
+        views.ActivationResendApiView.as_view(),
+        name="activation-resend",
+    ),
+
     # login jwt, get username and password give access and refresh token:
     path("jwt/create/", TokenObtainPairView.as_view(), name="jwt-create"),
 

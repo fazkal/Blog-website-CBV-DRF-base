@@ -1,5 +1,5 @@
 from utils import EmailThreading
-from serializers import RegistrationSerializer
+from serializers import RegistrationSerializer,ActivationResendSerializer
 from django.conf import settings
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
@@ -70,6 +70,32 @@ class ActivationApiView(APIView):
         return Response(
             {"Details": "Your account have been verified and activated successfully"}
         )
+
+
+# Define view for resend email of token activation account
+class ActivationResendApiView(generics.GenericAPIView):
+    serializer_class = ActivationResendSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = ActivationResendSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user_obj = serializer.validated_data["user"]
+        token = self.get_token_for_user(user_obj)
+        email_obj = EmailMessage(
+            "email/verify.tpl",
+            {"token": token},
+            "from@example.com",
+            to=[user_obj.email],
+        )
+        EmailThreading(email_obj).start()
+        return Response(
+            {"Details": "User activation resend successfully"},
+            status=status.HTTP_200_OK,
+        )
+
+    def get_token_for_user(self, user):
+        refresh = RefreshToken.for_user(user)
+        return str(refresh.access_token)
 
 
 # logout jwt view
