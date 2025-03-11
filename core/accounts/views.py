@@ -1,5 +1,7 @@
 from utils import EmailThreading
-from serializers import RegistrationSerializer,ActivationResendSerializer,ChangePasswordSerializer
+from models import Profile
+from serializers import (RegistrationSerializer,ActivationResendSerializer,
+        ChangePasswordSerializer,ProfileSerializer)
 from django.conf import settings
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
@@ -141,3 +143,14 @@ class ChangePasswordApiView(generics.UpdateAPIView):
                 status=status.HTTP_200_OK,
             )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+# Define view for edit Profile
+class ProfileApiView(generics.RetrieveUpdateAPIView):
+    serializer_class = ProfileSerializer
+    queryset = Profile.objects.all()
+
+    def get_object(self):
+        queryset = self.get_queryset()
+        obj = get_object_or_404(queryset, user=self.request.user)
+        return obj

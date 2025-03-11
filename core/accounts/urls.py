@@ -48,5 +48,7 @@ urlpatterns = [
         name="change-password",
     ),
 
+    # Put (update) profile for user
+    path("profile/", views.ProfileApiView.as_view(), name="profile"),
 
 ]
