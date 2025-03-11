@@ -41,5 +41,12 @@ urlpatterns = [
     # logout jwt:
     path('jwt/logout', views.LogoutView.as_view(),name='jwt-logout'),
 
+    # Change password
+    path(
+        "changed-password/",
+        views.ChangePasswordApiView.as_view(),
+        name="change-password",
+    ),
+
 
 ]
