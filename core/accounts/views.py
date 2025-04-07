@@ -1,6 +1,6 @@
-from utils import EmailThreading
-from models import Profile
-from serializers import (RegistrationSerializer,ActivationResendSerializer,
+from .utils import EmailThreading
+from .models import Profile
+from .serializers import (RegistrationSerializer,ActivationResendSerializer,
         ChangePasswordSerializer,ProfileSerializer)
 from django.conf import settings
 from django.shortcuts import get_object_or_404
