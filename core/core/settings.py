@@ -50,7 +50,9 @@ INSTALLED_APPS = [
     "rest_framework",
     "drf_yasg",
     "rest_framework_simplejwt",
-    "mail_templated"
+    "mail_templated",
+    'django_extensions'
+
 ]
 
 MIDDLEWARE = [
