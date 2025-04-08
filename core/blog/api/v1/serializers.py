@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Post, Category
+from ...models import Post, Category
 from accounts.models import Profile
 
 
@@ -15,7 +15,7 @@ class CategorySerializer(serializers.ModelSerializer):
 class PostSerializer(serializers.ModelSerializer):
     snippet = serializers.ReadOnlyField(source="get_snippet")
     absolute_url = serializers.HyperlinkedIdentityField(
-        view_name='blog:post',lookup_field='pk')
+        view_name='blog:api-v1:post-detail')
 
     class Meta:
         model = Post
