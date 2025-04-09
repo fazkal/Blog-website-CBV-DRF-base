@@ -40,7 +40,7 @@
                           <ul>
                             {% if request.user.is_authenticated %}
                               <li><a href="#">Logged in as {{request.user.username}}</a></li>
-                              <li><a href="{% url 'accounts:logout' %}">Log out</a></li>
+                              <li><a href="{% url 'accounts:jwt-logout' %}">Log out</a></li>
                               {% else %}
                               <li><a href="{% url 'accounts:jwt-create' %}">Login</a></li>
                               <li><a href="{% url 'accounts:registration' %}">Signup</a></li>
@@ -67,7 +67,7 @@
                     <ul class="nav-menu">
                       <li><a href="{% url 'website:index' %}">Home</a></li>
                       <li><a href="{% url 'website:about' %}">About</a></li>
-                      <li><a href="#">Blog </a></li>
+                      <li><a href="{% url 'blog:index' %}">Blog </a></li>
                         
                       
                       <!--
