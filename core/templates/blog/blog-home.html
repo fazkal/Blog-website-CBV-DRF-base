@@ -1,7 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load humanize %}
-{% load blog_tags %}
 {% block content %}
 
 			<!-- start banner Area -->
@@ -146,14 +144,14 @@
 						<div class="col-lg-4 sidebar-widgets">
 							<div class="widget-wrap">
 								
-								{% include 'blog/blog-search.html' %}
+								
 								{% include 'blog/blog-writer.html' %}
 
 								
 								<div class="single-sidebar-widget ads-widget">
 									<a href="#"><img class="img-fluid" src="{% static 'img/blog/ads-banner.jpg' %}" alt=""></a>
 								</div>
-							{% postcategories %}
+							
 								<div class="single-sidebar-widget newsletter-widget">
 									<h4 class="newsletter-title">Newsletter</h4>
 									<p>

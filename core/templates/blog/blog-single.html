@@ -1,7 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load humanize %}
-{% load blog_tags %}
 {% block content %}
 		  
 			<!-- start banner Area -->
@@ -122,8 +120,8 @@
                                                 <img src="{% static 'img/blog/c1.jpg' %}" alt="">
                                             </div>
                                             <div class="desc">
-                                                <h5><a href="#">{{comment.name}}</a></h5>
-                                                <p class="date">{{comment.created_date|naturaltime}}</p>
+                                                <h5><a href="#">comment.name</a></h5>
+                                                <p class="date">comment.created_date|naturaltime</p>
                                                 <p class="comment">
                                                     {{comment.message}}
                                                 </p>
@@ -150,7 +148,7 @@
 								{% endfor %}
 							</ul>
 							{% endif %}
-								<form method="post" action="{% url 'blog:single' pid=post.id %}">
+								<form method="post" action=" url 'blog:single' pid=post.id ">
 									{% csrf_token %}
 									<input type="hidden" name="post" value={{post.id}}>
 									{% if requests.user.is_authenticated %}
@@ -189,7 +187,7 @@
 
 								{% include 'blog/blog-writer.html' %}
 
-								{% latestposts %}
+								{% include 'blog/blog-latestpost.html' %}
 
 								<div class="single-sidebar-widget ads-widget">
 									<a href="#"><img class="img-fluid" src="{% static 'img/blog/ads-banner.jpg' %}" alt=""></a>
@@ -263,7 +261,7 @@
 										You can unsubscribe at any time
 									</p>								
 								</div>
-								{% include 'blog/blog-tags.html' %}							
+											
 							</div>
 						</div>
 					</div>
