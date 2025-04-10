@@ -3652,18 +3652,22 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 .widget-wrap .popular-post-widget .popular-post-list {
   margin-top: 30px;
+  
 }
 
 .widget-wrap .popular-post-widget .popular-post-list .thumb img {
   width: 100%;
+  max-width: 60px;
 }
 
 .widget-wrap .popular-post-widget .single-post-list {
   margin-bottom: 20px;
+
 }
 
 .widget-wrap .popular-post-widget .single-post-list .details {
   margin-left: 12px;
+
 }
 
 .widget-wrap .popular-post-widget .single-post-list .details h6 {
