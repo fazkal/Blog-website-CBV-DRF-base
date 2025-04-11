@@ -1,7 +1,8 @@
 {% load static %}
 <div class="single-sidebar-widget user-info-widget">
     <img src="{% static 'img/blog/user-info.png' %}" alt="">
-    <a href="#"><h4>{{post.author}}</h4></a>
+    <ol id="Author-name"></ol>
+    <a href="#"><h3></h3></a>
     <p>
         Senior blog writer
     </p>
@@ -14,4 +15,43 @@
     <p>
         Boot camps have its supporters andit sdetractors. Some people do not understand why you should have to spend money on boot camp when you can get. Boot camps have itssuppor ters andits detractors.
     </p>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+    integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer">
+</script>
+<script>
+    $(document).ready(function() {
+        var pathParts = window.location.pathname.split('/');
+        var id = pathParts[pathParts.length - 2];
+
+        if (id && !isNaN(id) && parseInt(Number(id)) == id && !isNaN(parseInt(id, 10))) {
+            var apiUrl = '/blog/api/v1/post/' + id;
+
+            $.ajax({
+                url: apiUrl,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    console.log('Data from API:', data);
+                    wrapper = $('#Author-name');
+
+                    // **تغییر:** بررسی وجود `data.author` و `data.id` قبل از استفاده
+                    if (data && data.author && data.id) {
+                        wrapper.append(`<h3>${data.author}</h3>`);
+                    } else {
+                        console.log('Author or ID not found in data.');
+                    }
+
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX request failed:", status, error); // ثبت خطا برای بررسی
+                }
+            });
+        } else {
+            console.log('Invalid ID or ID not found in URL.');
+        }
+    });
+</script>
+
+
 </div>
