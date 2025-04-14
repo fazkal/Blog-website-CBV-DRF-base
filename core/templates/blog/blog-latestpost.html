@@ -8,9 +8,7 @@
                 <img class="img-fluid" src="" alt="">
             </div>
             <div class="details">
-                <a href="#"><h6></h6></a>
-                <p></p>
-                <P></P>
+              
             </div>
         </div>
     </div>
@@ -38,7 +36,8 @@ $(document).ready(function() {
                 var recentPosts = data.results.slice(0,3);
 
                 for (post of recentPosts) {
-                    wrapper.append(`<img src=${post.image}><a href="/blog/${post.id}">${post.title}</a><P>${post.published_date}</p>`);
+                    wrapper.append(`<img src=${post.image} width=100px height=70px><br>
+                    <a href="/blog/${post.id}">${post.title}</a><P>${post.published_date}</p>`);
                 }
             } else {
                 console.error('data.results is not an array or does not exist');

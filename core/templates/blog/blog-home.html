@@ -31,7 +31,7 @@
 									<div class="overlay overlay-bg"></div>
 								    <a href="#" target="_blank">
 								      <div class="thumb">
-								  		 <img class="content-image img-fluid d-block mx-auto" src="{% static 'img/blog/cat-widget1.jpg' %}" alt="">
+								  		 <img class="content-image img-fluid d-block mx-auto" src="#" alt="">
 								  	  </div>
 								      <div class="content-details">
 								        <h4 class="content-title mx-auto text-uppercase">Social life</h4>
@@ -48,7 +48,7 @@
 									<div class="overlay overlay-bg"></div>
 								    <a href="#" target="_blank">
 								      <div class="thumb">
-								  		 <img class="content-image img-fluid d-block mx-auto" src="{% static 'img/blog/cat-widget2.jpg' %}" alt="">
+								  		 <img class="content-image img-fluid d-block mx-auto" src="#" alt="">
 								  	  </div>
 								      <div class="content-details">
 								        <h4 class="content-title mx-auto text-uppercase">Politics</h4>
@@ -65,7 +65,7 @@
 									<div class="overlay overlay-bg"></div>
 								    <a href="#" target="_blank">
 								      <div class="thumb">
-								  		 <img class="content-image img-fluid d-block mx-auto" src="{% static 'img/blog/cat-widget3.jpg' %}" alt="">
+								  		 <img class="content-image img-fluid d-block mx-auto" src="#" alt="">
 								  	  </div>
 								      <div class="content-details">
 								        <h4 class="content-title mx-auto text-uppercase">Food</h4>
@@ -86,70 +86,68 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-lg-8 posts-list">
-							{% for post in posts %}
+							
 							<div class="single-post row">
 								<div class="col-lg-3  col-md-3 meta-details">
 									<ul class="tags">
-										{% for cat in post.category.all %}
-										<li><a href="{%url 'blog:category' cat_name=cat.name%}">{{cat}}</a></li>
-										{% endfor %}
+										
+										<li><a href="#"></a></li>
+										
 										
 									</ul>
 									<div class="user-details row">
-										<p class="user-name col-lg-12 col-md-12 col-6"><a href="{% url 'blog:author' author_username=post.author.username %}">{{post.author.get_full_name}}</a> <span class="lnr lnr-user"></span></p>
-										<p class="date col-lg-12 col-md-12 col-6"><a href="#">{{post.published_date|date:"D d M Y"}}</a> <span class="lnr lnr-calendar-full"></span></p>
-										<p class="view col-lg-12 col-md-12 col-6"><a href="#">{{post.content_view}} Views</a> <span class="lnr lnr-eye"></span></p>
-										<p class="comments col-lg-12 col-md-12 col-6"><a href="#">{{comments|length}} Comments</a> <span class="lnr lnr-bubble"></span></p>						
+										<p class="user-name col-lg-12 col-md-12 col-6"><a href="#"></a> <span class="lnr lnr-user"></span></p>
+										<p class="date col-lg-12 col-md-12 col-6"><a href="#"></a> <span class="lnr lnr-calendar-full"></span></p>
+										<p class="view col-lg-12 col-md-12 col-6"><a href="#"> Views</a> <span class="lnr lnr-eye"></span></p>
+										<p class="comments col-lg-12 col-md-12 col-6"><a href="#"> Comments</a> <span class="lnr lnr-bubble"></span></p>						
 									</div>
 								</div>
 								<div class="col-lg-9 col-md-9 ">
 									<div class="feature-img">
-										<img class="img-fluid" src="{{post.image.url}}" alt="">
+										<img class="img-fluid" src="#" alt="">
 									</div>
-									<a class="posts-title" href="{% url 'blog:single' pid=post.id %}"><h3>{{post.title}}</h3></a>
+									<div class="posts-title" ><h3></h3></div>
 									<p class="excert">
-										{{post.content|truncatechars:200}}										</p>
-									<a href="{% url 'blog:single' pid=post.id %}" class="primary-btn">View More</a>
+										
+									</p>
+									<a href="#" class="primary-btn">View More</a>
 								</div>
 							</div>
-							{% endfor %}											
-		                    <nav class="blog-pagination justify-content-center d-flex">
-		                      <ul class="pagination">
-								{% if posts.has_previous %}
+							<div class=" pagination-container">
+
+							</div>										
+		                    <!--<nav class="blog-pagination justify-content-center d-flex">
+		                      <ul class="paginations">
+								
 		                            <li class="page-item">
-		                                <a href="?page={{ posts.previous_page_number }}" class="page-link" aria-label="Previous">
+		                                <a class="page-link1" aria-label="Previous">
 		                                    <span aria-hidden="true">
 		                                        <span class="lnr lnr-chevron-left"></span>
 		                                    </span>
 		                                </a>
 		                            </li>
-									{% endif %}
-									{% for i in posts.paginator.page_range%}
-		                            <li class="page-item"><a href="?page={{i}}" class="page-link">{{i}}</a></li>
-		                            {% endfor %}
+									
+		                            <li class="page-item"><a href="?page={{i}}" class="page-link"></a></li>
+		                            
 		                           
-		                            {% if posts.has_next %}
+		                           
 									<li class="page-item">
-		                                <a href="?page={{ posts.next_page_number }}" class="page-link" aria-label="Next">
+		                                <a class="page-link2" aria-label="Next">
 		                                    <span aria-hidden="true">
 		                                        <span class="lnr lnr-chevron-right"></span>
 		                                    </span>
 		                                </a>
 		                            </li>
-									{% endif %}
-		                        </ul> 
+									
+		                     	</ul> 
 								 
-							</nav>
+							</nav> -->
 						</div>
 						<div class="col-lg-4 sidebar-widgets">
 							<div class="widget-wrap">
 								
-								
-								
-
-								
 								<div class="single-sidebar-widget ads-widget">
-									<a href="#"><img class="img-fluid" src="{% static 'img/blog/ads-banner.jpg' %}" alt=""></a>
+									<a href="#"><img class="img-fluid" src="#" alt=""></a>
 								</div>
 							
 								<div class="single-sidebar-widget newsletter-widget">
@@ -195,6 +193,60 @@
 						</div>
 					</div>
 				</div>	
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+    integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer">
+</script>
+<script>
+let currentPage = 1;
+let postsPerPage = 4; // تعداد پست در هر صفحه
+let totalPosts = 0; // مقدار اولیه
+let allPosts = []; // برای ذخیره تمام پست ها
+
+function fetchPosts(page) {
+  $.get('/blog/api/v1/post/?page=' + page, function(data, textStatus, jqXHR) {
+    totalPosts = data.total_objects; // تعداد کل پست‌ها را دریافت می‌کنیم
+    allPosts = allPosts.concat(data.results); // پست های صفحه جاری را به لیست کلی اضافه می کنیم
+
+    displayPosts(data.results, page, Math.ceil(totalPosts / postsPerPage));
+    
+    if(page < Math.ceil(totalPosts / postsPerPage)){
+        //اگر هنوز صفحه بعدی وجود دارد
+        currentPage++;
+        fetchPosts(currentPage);
+    }
+  });
+}
+
+function displayPosts(posts, currentPage, totalPages) {
+  const wrapperTitle = $('.posts-title');
+  const wrapperContent = $('.excert');
+  wrapperTitle.empty(); // محتوای قبلی را پاک می‌کنیم
+  wrapperContent.empty(); // محتوای قبلی را پاک می‌کنیم
+
+  for (const post of posts) {
+    wrapperTitle.append(`<img src="${post.image}" width="500px" height="250px"><br>
+                         <a href="/blog/${post.id}"><h5>${post.title}</h5></a>
+                         <p>${post.snippet}</p><hr>`);
+  }
+
+  // اضافه کردن لینک‌های صفحه بندی
+  let paginationHtml = '<div class="pagination">';
+  if (currentPage > 1) {
+    paginationHtml += `<a href="#" onclick="fetchPosts(${currentPage - 1})">Previous</a> `;
+  }
+  paginationHtml += `Page ${currentPage} of ${totalPages}`;
+  if (currentPage < totalPages) {
+    paginationHtml += ` <a href="#" onclick="fetchPosts(${currentPage + 1})">Next</a>`;
+  }
+  paginationHtml += '</div>';
+  $('.pagination-container').html(paginationHtml); // فرض می‌شود که یک عنصر با کلاس pagination-container وجود دارد.
+}
+
+// شروع فراخوانی API از صفحه اول
+fetchPosts(1);
+
+</script>
 			</section>
 			<!-- End post-content Area -->
 	
