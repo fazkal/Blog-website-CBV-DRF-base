@@ -20,7 +20,7 @@ class Post(models.Model):
         return self.title
 
     def get_snippet(self):
-        return self.content[0:20]
+        return self.content[0:20]+ '...'
 
 
 class Category(models.Model):
