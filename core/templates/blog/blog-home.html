@@ -106,7 +106,7 @@
 									<div class="feature-img">
 										<img class="img-fluid" src="#" alt="">
 									</div>
-									<div class="posts-title" ><h3></h3></div>
+									<div id="posts-title" ><h3></h3></div>
 									<p class="excert">
 										
 									</p>
@@ -145,7 +145,12 @@
 						</div>
 						<div class="col-lg-4 sidebar-widgets">
 							<div class="widget-wrap">
-								
+								<div class="single-sidebar-widget search-widget">
+									<form id="search-form" >
+										<input id="search-input" placeholder="Search Posts" name="search" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Posts'" >
+										<button type="submit"><i class="fa fa-search"></i></button>
+									</form>
+								</div>
 								<div class="single-sidebar-widget ads-widget">
 									<a href="#"><img class="img-fluid" src="#" alt=""></a>
 								</div>
@@ -219,7 +224,7 @@ function fetchPosts(page) {
 }
 
 function displayPosts(posts, currentPage, totalPages) {
-  const wrapperTitle = $('.posts-title');
+  const wrapperTitle = $('#posts-title');
   const wrapperContent = $('.excert');
   wrapperTitle.empty(); // محتوای قبلی را پاک می‌کنیم
   wrapperContent.empty(); // محتوای قبلی را پاک می‌کنیم
@@ -247,6 +252,49 @@ function displayPosts(posts, currentPage, totalPages) {
 fetchPosts(1);
 
 </script>
+<script>
+    $(document).ready(function() {  // Wait for document to be ready
+        $('#search-form').submit(function(event) {
+            event.preventDefault();
+
+            var searchTerm = $('#search-input').val();
+            var searchUrl = 'http://127.0.0.1:8000/blog/api/v1/post/?search=' + searchTerm;
+
+            fetch(searchUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    displayResults(data);
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                    $('#posts-title').html('Error fetching data.');
+                });
+
+            function displayResults(data) {
+                var postsTitleDiv = $('#posts-title');  // Use jQuery to select the element
+                postsTitleDiv.empty();  // Use jQuery to empty the element
+
+                if (data && data.length > 0) {
+                    data.forEach(item => {
+                        var title = item.title;
+                        var snippet = item.snippet;
+
+                        // Use jQuery to append the content
+                        postsTitleDiv.append(`<div><h3>${title}</h3><p>${snippet}</p><hr></div>`);
+                    });
+                } else {
+                    postsTitleDiv.html('<p>No results found.</p>');  // Use jQuery to set the content
+                }
+            }
+        });
+    });
+</script>
+
 			</section>
 			<!-- End post-content Area -->
 	
