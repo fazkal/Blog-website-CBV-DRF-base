@@ -1,0 +1,51 @@
+<div class="col-lg-9 col-md-9">
+  <div id="image"></div>
+    <h3 class="mt-20 mb-20"></h3>
+    <p class="excert">
+        
+    </p>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+    integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer">
+</script>
+<script>
+    $(document).ready(function() {
+        var pathParts = window.location.pathname.split('/');
+        var id = pathParts[pathParts.length - 2];
+
+        if (id && !isNaN(id) && parseInt(Number(id)) == id && !isNaN(parseInt(id, 10))) {
+            var apiUrl = '/blog/api/v1/post/' + id;
+
+            $.ajax({
+                url: apiUrl,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    console.log('Data from API:', data);
+                    wrapperImage = $('#image');
+                    wrapperTitle = $('.mt-20');
+                    wrapperContent = $('.excert'); 
+
+                    // **تغییر:** بررسی وجود `data.author` و `data.id` قبل از استفاده
+                    if (data && data.title && data.id && data.content) {
+                        wrapperImage.append(`<img src=${data.image} width="500px" height="250px"> `)
+                        wrapperTitle.append(`${data.title}`);
+                        wrapperContent.append(`${data.content}`);
+                    } else {
+                        console.log('Author or ID not found in data.');
+                    }
+
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX request failed:", status, error); // ثبت خطا برای بررسی
+                }
+            });
+        } else {
+            console.log('Invalid ID or ID not found in URL.');
+        }
+    });
+</script>
+
+
+</div>
