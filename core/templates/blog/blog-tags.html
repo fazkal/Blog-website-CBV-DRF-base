@@ -1,0 +1,66 @@
+<div class="single-sidebar-widget tag-cloud-widget">
+    <h4 class="tagcloud-title">Tag Clouds</h4>
+    <ul id="category-list">
+        
+    </ul>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+    integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer">
+</script>
+
+<script>
+    $(document).ready(function() {
+    // 1. دریافت و نمایش دسته‌بندی‌ها
+    $.ajax({
+        url: 'http://127.0.0.1:8000/blog/api/v1/category/',
+        method: 'GET',
+        success: function(categories) {
+            var categoryList = $('#category-list'); // Assuming you have a <ul> or <ol> element with id="category-list"
+            $.each(categories, function(index, category) {
+                var listItem = $('<li>');
+                var link = $('<a>').attr('href', '#').text(category.name);
+                link.on('click', function(event) {
+                    event.preventDefault();
+                    // 2. دریافت و نمایش پست‌ها بر اساس دسته‌بندی
+                    var categoryName = category.name;
+                    $.ajax({
+                        url: 'http://127.0.0.1:8000/blog/api/v1/post/?category__name=' + categoryName,
+                        method: 'GET',
+                        success: function(posts) {
+                            var postList = $('#posts-title'); // Assuming you have a <div> element with id="post-list"
+                            postList.empty(); // Clear previous posts
+
+                            $.each(posts, function(index, post) {
+                                var postDiv = $('<div>').addClass('post');
+
+                                // Check if image exists before creating image element
+                                if (post.image) {
+                                  var image = $('<img>').attr('src', post.image).attr('alt', post.title);
+                                  postDiv.append(image);
+                                }
+
+                                var title = $('<h2>').text(post.title);
+                                var snippet = $('<p>').text(post.snippet);
+
+                                postDiv.append(title, snippet);
+                                postList.append(postDiv);
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error fetching posts:', error);
+                        }
+                    });
+                });
+                listItem.append(link);
+                categoryList.append(listItem);
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error('Error fetching categories:', error);
+        }
+    });
+});
+
+</script>
+</div>	
