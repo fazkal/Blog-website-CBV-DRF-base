@@ -1,4 +1,5 @@
 from django.db import models
+from accounts.models import Profile
 
 
 # Create your models here.
@@ -21,6 +22,9 @@ class Post(models.Model):
 
     def get_snippet(self):
         return self.content[0:20]+ '...'
+    
+    def get_author_full_name(self):
+        return f"{self.author.first_name} {self.author.last_name}"
 
 
 class Category(models.Model):

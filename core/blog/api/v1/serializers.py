@@ -16,6 +16,7 @@ class PostSerializer(serializers.ModelSerializer):
     snippet = serializers.ReadOnlyField(source="get_snippet")
     absolute_url = serializers.HyperlinkedIdentityField(
         view_name='blog:api-v1:post-detail')
+    author_full_name = serializers.ReadOnlyField(source="get_author_full_name")
 
     class Meta:
         model = Post
@@ -23,6 +24,7 @@ class PostSerializer(serializers.ModelSerializer):
             "id",
             "image",
             "author",
+            "author_full_name",
             "title",
             "content",
             "snippet",
