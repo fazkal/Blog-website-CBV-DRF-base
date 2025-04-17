@@ -110,7 +110,7 @@
 									<p class="excert">
 										
 									</p>
-									<a href="#" class="primary-btn">View More</a>
+									<a href="#" class="primary-btn">Create Post</a>
 								</div>
 							</div>
 							<div class=" pagination-container">
@@ -278,7 +278,47 @@ fetchPosts(1);
         });
     });
 </script>
-
+<!-- در انتهای <body> در صفحه ای که لینک قرار دارد -->
+	<script>
+		$(document).ready(function(){
+			$('.primary-btn').click(function(e){
+				e.preventDefault();
+				$.ajax({
+					url: "{% url 'blog:post_form' %}",  // Use the name of the new URL
+					type: 'GET',
+					success: function(data){
+						$('.modal-body').html(data); // Insert form content into modal body
+						$('#postModal').modal('show'); // Show the modal
+						// Attach submit handler to the form in the modal
+						$('form').submit(function(e) {
+							e.preventDefault();
+							var formData = new FormData(this);
+							$.ajax({
+								url: "{% url 'blog:create' %}", // Use the name of the create URL
+								type: 'POST',
+								data: formData,
+								processData: false,
+								contentType: false,
+								success: function(response) {
+									$('#postModal').modal('hide');  // Hide modal on success
+									// Optionally refresh the page or update the post list
+									location.reload();  // Refresh the current page
+								},
+								error: function(xhr, status, error) {
+									// Handle errors (e.g., display error messages in the modal)
+									$('.modal-body').html(xhr.responseText); // Display error messages
+								}
+							});
+						});
+					},
+					error: function(xhr, status, error){
+						console.error("Error loading form:", error);
+					}
+				});
+			});
+		});
+	</script>
+	
 			</section>
 			<!-- End post-content Area -->
 	
