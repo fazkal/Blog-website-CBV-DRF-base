@@ -1,0 +1,77 @@
+<div class="col-lg-3  col-md-3 meta-details">
+    <ul class="tags">
+        <li><a href="#">Food,</a></li>
+        <li><a href="#">Technology,</a></li>
+        <li><a href="#">Politics,</a></li>
+        <li><a href="#">Lifestyle</a></li>
+    </ul>
+    <div class="user-details row">
+        <p class="user-name col-lg-12 col-md-12 col-6"><a href="#"></a> <span class="lnr lnr-user"></span></p>
+        <p class="date col-lg-12 col-md-12 col-6"><a href="#"></a> <span class="lnr lnr-calendar-full"></span></p>
+        <!--<p class="view col-lg-12 col-md-12 col-6"><a href="#"> Views</a> <span class="lnr lnr-eye"></span></p>-->
+        <p class="comments col-lg-12 col-md-12 col-6"><a href="#"></a> <span class="lnr lnr-bubble"></span></p>
+        <ul class="social-links col-lg-12 col-md-12 col-6">
+            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+            <li><a href="#"><i class="fa fa-github"></i></a></li>
+            <li><a href="#"><i class="fa fa-behance"></i></a></li>
+        </ul>																				
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+    integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer">
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          // 1. استخراج ID پست از URL
+          const pathSegments = window.location.pathname.split('/');
+          const postId = pathSegments[2]; // فرض بر اینکه URL به شکل /blog/5/ باشد
+      
+          // 2. ساخت URL API
+          const apiUrl = `http://127.0.0.1:8000/blog/api/v1/post/${postId}/`;
+      
+          // 3. درخواست به API
+          fetch(apiUrl)
+            .then(response => {
+              if (!response.ok) {
+                throw new Error(`Network response was not ok: ${response.status}`);
+              }
+              return response.json();
+            })
+            .then(data => {
+              // 4. به‌روزرسانی عناصر HTML با داده‌های دریافتی از API
+      
+              // Categories (tags)
+              const tagsElement = document.querySelector('.tags');
+              tagsElement.innerHTML = ''; // پاک کردن محتوای قبلی
+      
+              if (data.category && Array.isArray(data.category)) {
+                  data.category.forEach(category => {
+                      const li = document.createElement('li');
+                      const a = document.createElement('a');
+                      a.href = '#'; // یا هر لینک مورد نظر
+                      a.textContent = category.name + ','; // نمایش نام دسته‌بندی
+                      li.appendChild(a);
+                      tagsElement.appendChild(li);
+                  });
+              }
+      
+              // Author full name
+              const userNameElement = document.querySelector('.user-name a');
+              userNameElement.textContent = data.author_full_name;
+              userNameElement.href = "#";  //اضافه کردن لینک برای نام نویسنده در صورت نیاز
+      
+              // Published date
+              const dateElement = document.querySelector('.date a');
+              dateElement.textContent = data.published_date;
+              dateElement.href = "#"; //اضافه کردن لینک برای تاریخ انتشار در صورت نیاز
+      
+            })
+            .catch(error => {
+              console.error('There was a problem fetching the data:', error);
+              // اینجا می‌توانید یک پیام خطا به کاربر نمایش دهید
+            });
+        });
+      </script>
+      
+</div>
