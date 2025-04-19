@@ -133,3 +133,56 @@ $(function() {
 		}).click();
 	}
 });
+async function fetchProtectedResource() {
+    const accessToken = localStorage.getItem('access_token');
+
+    const response = await fetch('/api/some-protected-resource/', {
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + accessToken
+        }
+    });
+
+    if (!response.ok) {
+        // اگر توکن منقضی باشد، ممکن است نیاز به refresh دارید
+    }
+
+    const data = await response.json();
+    console.log(data);
+}
+
+async function logout() {
+    const refreshToken = localStorage.getItem('refresh_token');
+
+    await fetch('/jwt/logout/', {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer ' + refreshToken
+        }
+    });
+
+    // حذف توکن‌ها از local storage
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    window.location.href = '/accounts/login/'; // هدایت به صفحه لاگین
+}
+
+async function refreshAccessToken() {
+    const refreshToken = localStorage.getItem('refresh_token');
+
+    const response = await fetch('/jwt/token/refresh/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ refresh: refreshToken })
+    });
+
+    if (response.ok) {
+        const data = await response.json();
+        // ذخیره توکن جدید در local storage
+        localStorage.setItem('access_token', data.access);
+    } else {
+        console.error('Failed to refresh token');
+    }
+}

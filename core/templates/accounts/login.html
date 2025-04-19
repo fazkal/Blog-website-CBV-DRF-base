@@ -1,0 +1,57 @@
+<!-- accounts/login.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+    integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer">
+    </script>
+    <script>
+      async function login(event) {
+          event.preventDefault(); // جلوگیری از ارسال فرم خودکار
+
+          const username = document.getElementById('username').value;
+          const password = document.getElementById('password').value;
+
+          try {
+              const response = await fetch('/login/', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                      'X-CSRFToken': '{{ csrf_token }}', // اضافه کردن توکن CSRF
+                  },
+                  body: JSON.stringify({ username, password })
+              });
+
+              if (!response.ok) {
+                  throw new Error('Login failed');
+              }
+
+              const data = await response.json();
+              // ذخیره توکن در localStorage
+              localStorage.setItem('access_token', data.access);
+              localStorage.setItem('refresh_token', data.refresh);
+              // Redirect به صفحه مبدأ، تغییر بدهید به مسیر مورد نظر پس از لاگین
+              window.location.href = '/';
+          } catch (error) {
+              console.error('Error:', error);
+              alert('Login failed. Please check your credentials and try again.');
+          }
+      }
+    </script>
+</head>
+<body>
+    <h2>Login</h2>
+    <form onsubmit="login(event)">
+        {% csrf_token %}
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit">Login</button>
+    </form>
+</body>
+</html>

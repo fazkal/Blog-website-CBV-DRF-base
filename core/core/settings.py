@@ -155,6 +155,12 @@ AUTH_USER_MODEL = "accounts.user"
 
 # rest_framework settings
 REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',  # یا هر سطح دسترسی دیگر
+    ],
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.BasicAuthentication",
         "rest_framework.authentication.SessionAuthentication",
@@ -194,6 +200,12 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=60),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
+
+SESSION_COOKIE_SECURE = True  # در محیط production
+CSRF_COOKIE_SECURE = True  # در محیط production
+SESSION_COOKIE_HTTPONLY = True
+CSRF_COOKIE_HTTPONLY = True
+
 
 # Email configuration for send email via gmail
 EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'

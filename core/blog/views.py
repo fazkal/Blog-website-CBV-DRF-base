@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView,CreateView
 from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Post
 from accounts.models import Profile
 from .forms import PostForm
@@ -14,15 +15,19 @@ class BlogsView(ListView):
 
 
 # TemplateView for display a single post
-class BlogSingleView(TemplateView):
+class BlogSingleView(LoginRequiredMixin,TemplateView):
     template_name = "blog/blog-single.html"
+    login_url = '/accounts/login/'  # Optional: Redirect URL if not logged in
 
 
-class PostCreateView(CreateView):
+
+class PostCreateView(LoginRequiredMixin,CreateView):
     model = Post
     form_class = PostForm
     # success_url = "/blog/"
     template_name = 'blog/post_form.html'
+    login_url = '/accounts/login/'  # Optional: Redirect URL if not logged in
+
 
     def form_valid(self, form):
         user_profile = getattr(self.request.user, 'profile', None)
@@ -36,7 +41,8 @@ class PostCreateView(CreateView):
         return super().form_valid(form)
     
 
-class PostFormView(View):
+class PostFormView(LoginRequiredMixin,View):
+    login_url = '/accounts/login/'  # Optional: Redirect URL if not logged in
     def get(self, request):
         form = PostForm()
         return render(request, 'blog/post_form.html', {'form': form})
