@@ -5,6 +5,8 @@ from .serializers import (RegistrationSerializer,ActivationResendSerializer,
 from django.conf import settings
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
 from rest_framework import generics, permissions, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
@@ -154,3 +156,9 @@ class ProfileApiView(generics.RetrieveUpdateAPIView):
         queryset = self.get_queryset()
         obj = get_object_or_404(queryset, user=self.request.user)
         return obj
+    
+def loginView(request):
+    if request.user.is_authenticated:
+        return HttpResponseRedirect("/")
+    else:
+        return render(request, "accounts/login.html")
