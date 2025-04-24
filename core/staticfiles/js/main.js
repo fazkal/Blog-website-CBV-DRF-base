@@ -186,3 +186,27 @@ async function refreshAccessToken() {
         console.error('Failed to refresh token');
     }
 }
+function fetchData(url) {
+    const headers = addTokenToHeader();
+
+    fetch(url, {
+        method: 'GET', // یا هر متد دیگری
+        headers: headers
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        // پردازش داده‌ها
+        console.log(data);
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+    });
+}
+
+// مثال استفاده
+fetchData('http://127.0.0.1:8000/protected-resource/');
