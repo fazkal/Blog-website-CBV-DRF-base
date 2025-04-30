@@ -42,8 +42,8 @@
                               <li><a href="#">Logged in as {{request.user.username}}</a></li>
                               <li><a href="{% url 'accounts:jwt-logout' %}">Log out</a></li>
                               {% else %}
-                              <li><a href="{% url 'accounts:jwt-create' %}">Login</a></li>
-                              <li><a href="{% url 'accounts:registration' %}">Signup</a></li>
+                              <li><a href="{% url 'accounts:login' %}">Login</a></li>
+                              <li><a href="{% url 'website:signup' %}">Signup</a></li>
                               {% endif %}
                           </ul>			
                       </div>
