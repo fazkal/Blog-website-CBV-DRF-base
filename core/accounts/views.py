@@ -1,14 +1,16 @@
 from .utils import EmailThreading
 from .models import Profile
 from .serializers import (RegistrationSerializer,ActivationResendSerializer,
-        ChangePasswordSerializer,ProfileSerializer)
+        ChangePasswordSerializer,ProfileSerializer,CustomTokenObtainPairSerializer)
 from django.conf import settings
 from django.shortcuts import get_object_or_404
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model,authenticate
+from django.contrib.auth import login as auth_login 
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import generics, permissions, status
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated,AllowAny
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -22,6 +24,8 @@ User=get_user_model()
 # Define view for registration account
 class RegistrationApiView(generics.GenericAPIView):
     serializer_class = RegistrationSerializer
+    # For access to registration post request API:
+    permission_classes = (AllowAny,)
 
     def post(self, request, *args, **kwargs):
         serializer = RegistrationSerializer(data=request.data)
@@ -157,8 +161,35 @@ class ProfileApiView(generics.RetrieveUpdateAPIView):
         obj = get_object_or_404(queryset, user=self.request.user)
         return obj
     
+
+
 def loginView(request):
     if request.user.is_authenticated:
         return HttpResponseRedirect("/")
-    else:
-        return render(request, "accounts/login.html")
+    
+    if request.method == "POST":
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        user = authenticate(request, email=email, password=password)
+        
+        if user is not None:
+            auth_login(request, user) 
+            return HttpResponseRedirect("/") 
+        else:
+            return render(request, "accounts/login.html", {"error": "Invalid credentials"})
+    
+    return render(request, "accounts/login.html")
+    
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
+    
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data,context={'request': request})
+        print(serializer)
+        try:
+            serializer.is_valid(raise_exception=True)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(serializer.validated_data, status=status.HTTP_200_OK)

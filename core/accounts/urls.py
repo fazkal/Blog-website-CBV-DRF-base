@@ -32,7 +32,7 @@ urlpatterns = [
     ),
 
     # login jwt, get username and password give access and refresh token:
-    path("jwt/login/", TokenObtainPairView.as_view(), name="jwt-create"),
+    path("jwt/login/", views.CustomTokenObtainPairView.as_view(), name="jwt-create"),
     
     # link for display login page 
     path('login/', views.loginView,name= "login"),
