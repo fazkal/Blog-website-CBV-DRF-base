@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 from decouple import config
 from datetime import timedelta
+import mimetypes
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -52,11 +53,13 @@ INSTALLED_APPS = [
     "drf_yasg",
     "rest_framework_simplejwt",
     "mail_templated",
+    "corsheaders",
     'django_extensions'
 
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -64,6 +67,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
+
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -79,6 +84,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                
             ],
         },
     },
@@ -157,6 +163,7 @@ AUTH_USER_MODEL = "accounts.user"
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer'
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',  # یا هر سطح دسترسی دیگر
@@ -184,7 +191,9 @@ SIMPLE_JWT = {
     'JWK_URL': None,
     'LEEWAY': 0,
 
-    'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_HEADER_TYPES': ('Bearer', 'JWT'),  
+    'AUTH_COOKIE': 'access_token',  
+    'AUTH_COOKIE_SECURE': True,
     'AUTH_HEADER_PREFIX': 'Bearer',
     'USER_ID_FIELD': 'id',
     'USER_ID_CLAIM': 'user_id',
@@ -201,11 +210,11 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
 
-SESSION_COOKIE_SECURE = True  # در محیط production
-CSRF_COOKIE_SECURE = True  # در محیط production
+SESSION_COOKIE_SECURE = False  # در محیط production
+CSRF_COOKIE_SECURE = False  # در محیط production
 SESSION_COOKIE_HTTPONLY = True
 CSRF_COOKIE_HTTPONLY = True
-
+CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000', 'http://localhost:8000']
 
 # Email configuration for send email via gmail
 EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
@@ -215,3 +224,15 @@ EMAIL_HOST_USER ='test4mydev@gmail.com'
 # This is App password, no account's password:
 EMAIL_HOST_PASSWORD ='Jvgzltrhmmrvtpae'
 EMAIL_PORT =587
+
+
+mimetypes.add_type("application/javascript", ".js", True)
+
+AUTHENTICATION_BACKENDS = [
+     'accounts.authentication.EmailBackend',
+     'django.contrib.auth.backends.ModelBackend',
+ ]
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_EXPOSE_HEADERS = ['Authorization']

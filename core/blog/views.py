@@ -17,6 +17,7 @@ class BlogsView(ListView):
 # TemplateView for display a single post
 class BlogSingleView(LoginRequiredMixin,TemplateView):
     template_name = "blog/blog-single.html"
+    #success_url = "/blog/"
     login_url = '/accounts/login/'  # Optional: Redirect URL if not logged in
 
 
