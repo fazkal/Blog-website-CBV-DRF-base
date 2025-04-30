@@ -26,3 +26,7 @@ class NewsletterView(FormView):
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
+    
+
+class SignupView(TemplateView):
+    template_name = "accounts/registration.html"
