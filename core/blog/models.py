@@ -21,7 +21,7 @@ class Post(models.Model):
         return self.title
 
     def get_snippet(self):
-        return self.content[0:20]+ '...'
+        return self.content[0:60]+ '...'
     
     def get_author_full_name(self):
         return f"{self.author.first_name} {self.author.last_name}"
