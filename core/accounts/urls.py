@@ -37,12 +37,15 @@ urlpatterns = [
     # link for display login page 
     path('login/', views.loginView,name= "login"),
 
+    # For logout
+    path('logout/',views.LogoutView.as_view(),name='logout'),
+
     # get refresh token and give new access token:
     path("jwt/refresh/", TokenRefreshView.as_view(), name="jwt-refresh"),
     path("jwt/verify/", TokenVerifyView.as_view(), name="jwt-verify"),
 
     # logout jwt:
-    path('jwt/logout', views.LogoutView.as_view(),name='jwt-logout'),
+    path('jwt/logout/', views.LogoutJWTView.as_view(),name='jwt-logout'),
 
     # Change password
     path(

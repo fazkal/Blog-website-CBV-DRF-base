@@ -3,8 +3,8 @@ from .models import Profile
 from .serializers import (RegistrationSerializer,ActivationResendSerializer,
         ChangePasswordSerializer,ProfileSerializer,CustomTokenObtainPairSerializer)
 from django.conf import settings
-from django.shortcuts import get_object_or_404
-from django.contrib.auth import get_user_model,authenticate
+from django.shortcuts import get_object_or_404,redirect
+from django.contrib.auth import get_user_model,authenticate,logout
 from django.contrib.auth import login as auth_login 
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -108,7 +108,7 @@ class ActivationResendApiView(generics.GenericAPIView):
 
 
 # logout jwt view
-class LogoutView(generics.GenericAPIView):
+class LogoutJWTView(generics.GenericAPIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def post(self, request):
@@ -119,6 +119,16 @@ class LogoutView(generics.GenericAPIView):
             return Response(status=status.HTTP_205_RESET_CONTENT)
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+# Define class for customize logout user
+class LogoutView(generics.GenericAPIView):
+    def get(self, request, *args, **kwargs):
+        """
+        Logout class
+        """
+        logout(request)
+        return redirect('/')
 
 
 # Define view for change password

@@ -229,7 +229,6 @@ EMAIL_PORT =587
 mimetypes.add_type("application/javascript", ".js", True)
 
 AUTHENTICATION_BACKENDS = [
-     'accounts.authentication.EmailBackend',
      'django.contrib.auth.backends.ModelBackend',
  ]
 
