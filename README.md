@@ -29,19 +29,22 @@ git clone https://github.com/fazkal/Blog-website-CBV-DRF-base.git
 cd Blog-website-CBV-DRF-base
 
 2. Install dependencies:
+```bash
 pip install -r requirements.txt
 
 3. Run migrations:
+```bash
 python manage.py migrate
 
 4. Create a superuser:
+```bash
 python manage.py createsuperuser
 
 5. Run the development server:
-
+```bash
 python manage.py runserver
-
-6.     Open your browser and go to:
+```
+6.Open your browser and go to:
 
 http://127.0.0.1:8000/
 
