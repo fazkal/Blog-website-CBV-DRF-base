@@ -69,5 +69,3 @@ Author
 Repository
 
 github.com/fazkal/Blog-website-CBV-DRF-base
-python manage.py createsuperusergit clone https://github.com/fazkal/Blog-website-CBV-DRF-base.git
-cd Blog-website-CBV-DRF-base
