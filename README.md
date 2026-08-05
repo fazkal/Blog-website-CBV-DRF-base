@@ -27,19 +27,19 @@ This project is a flexible blog platform. It combines the ease of use of Django'
 ```bash
 git clone https://github.com/fazkal/Blog-website-CBV-DRF-base.git
 cd Blog-website-CBV-DRF-base
-
+```
 2. Install dependencies:
 ```bash
 pip install -r requirements.txt
-
+```
 3. Run migrations:
 ```bash
 python manage.py migrate
-
+```
 4. Create a superuser:
 ```bash
 python manage.py createsuperuser
-
+```
 5. Run the development server:
 ```bash
 python manage.py runserver
